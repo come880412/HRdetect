@@ -70,7 +70,6 @@ ax3.set_xlim(0, fs)
 ax4.set_xlim(0, fs)
 
 
-
 # plot parameters
 print('plotting data...')
 # open serial port
@@ -80,14 +79,11 @@ ser.flush()
 timed = time_Data(max_entries=200)
 start = time.time()
 temp = deque(maxlen=20)
-#先初始畫200個點
 
 temp_HR = deque(maxlen=100)
-#for i in range(100):
-#    temp_HR.append(72)
 
-#while True:
-for iii in range(400):
+while True:
+#for iii in range(400):
     for ii in range(10):
 
         try:
@@ -110,9 +106,9 @@ for iii in range(400):
         elif PData_filter[m1] > 10 or PData_filter[m2] > 10:
             plt.xlabel('HR: No' + '  HRV: '+ str(round(np.std(timed.time),3)))
         elif m2-m1>=50:
-            HR=int(1/(m2-m1)*fs*60)
-            #if  HR > np.mean(temp_HR)-20 and HR < np.mean(temp_HR)+20:      
-            if  HR > 50 and HR < 120:      
+            HR=int(1/(m2-m1)*fs*60) 
+            if  HR > np.mean(temp_HR)-20 or HR < np.mean(temp_HR)+20:    
+            #if  HR > 50 and HR < 120:      
                 temp_HR.append(HR)
                 timed.add(round((m2-m1)/fs,4))
                 plt.xlabel('HR: '+ str(HR) + '  HRV: ' + str(round(np.std(timed.time),3)))
